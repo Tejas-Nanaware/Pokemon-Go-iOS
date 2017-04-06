@@ -13,10 +13,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var manager = CLLocationManager()
     var update = 0 // Counts till 4 then stops updating location
     
+    // To reset user location
+    @IBAction func userLocationRepositioning(_ sender: Any) {
+        let region = MKCoordinateRegionMakeWithDistance(self.manager.location!.coordinate, 400, 400)
+        self.mapView.setRegion(region, animated: true)
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.manager.delegate = self
-
+        self.manager.startUpdatingLocation()
+        
         // Check and request authorization status and location showing
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             self.mapView.showsUserLocation = true
@@ -29,14 +38,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     // To set map region
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        if update < 4 {
-            let region = MKCoordinateRegionMakeWithDistance(self.manager.location!.coordinate, 400, 400)
-            self.mapView.setRegion(region, animated: true)
-            update += 1
+            if update < 4 {
+                let region = MKCoordinateRegionMakeWithDistance(self.manager.location!.coordinate, 400, 400)
+                    self.mapView.setRegion(region, animated: true)
+
+                update += 1
+                print("updating")
         }
         else {
             self.manager.stopUpdatingLocation()
+            print("stopped")
         }
     }
     
