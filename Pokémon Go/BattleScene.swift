@@ -162,7 +162,7 @@ class BattleScene : SKScene, SKPhysicsContactDelegate {
     
     func throwPokeball() -> Void {
         self.canThrowPokeball = false
-        let dt : CGFloat = 1.0/500         // 1second / frame
+        let dt : CGFloat = 1.0/5         // 1second / frame
         let dist = CGVector(dx: self.touchPoint.x - self.pokeballSprite.position.x, dy: self.touchPoint.y - self.pokeballSprite.position.y)
         let velocity = CGVector(dx: dist.dx/dt, dy: dist.dy/dt)
         self.pokeballSprite.physicsBody?.velocity = velocity
