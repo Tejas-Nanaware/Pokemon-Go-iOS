@@ -2,8 +2,8 @@
 //  CDHelper.swift
 //  Pokémon Go
 //
-//  Created by admin on 06/04/17.
-//  Copyright © 2017 ACE. All rights reserved.
+//  Created by Tejas on 06/04/17.
+//  Copyright © 2017 Tejas-Nanaware. All rights reserved.
 //
 import CoreData
 import UIKit

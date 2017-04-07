@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  Pokémon Go
 //
-//  Created by admin on 06/04/17.
-//  Copyright © 2017 ACE. All rights reserved.
+//  Created by Tejas on 06/04/17.
+//  Copyright © 2017 Tejas-Nanaware. All rights reserved.
 //
 
 import UIKit
@@ -88,7 +88,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
     }
     
-    
+    // To select pokemon
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        mapView.deselectAnnotation(view.annotation!, animated: true)
+        if view.annotation! is MKUserLocation {
+            return
+        }
+        let region = MKCoordinateRegionMakeWithDistance((view.annotation?.coordinate)!, 150, 150)
+        self.mapView.setRegion(region, animated: true)
+        
+        if let coordinate = self.manager.location?.coordinate {
+            if MKMapRectContainsPoint(mapView.visibleMapRect, MKMapPointForCoordinate(coordinate)) {
+                print("In range")
+                
+                let battleController = BattleViewController()
+                
+                let pokemon = (view.annotation as! PokemonAnnotation).pokemon
+                battleController.pokemon = pokemon
+                self.present(battleController, animated: true, completion: nil)
+                self.mapView.removeAnnotation(view.annotation!)
+            } else {
+                print("Out of range")
+            }
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
